@@ -100,7 +100,7 @@ function Navbar({ setOpenAuth, openAuth, currentUser }) {
         />
 
         {/* Conditional Rendering for User Actions */}
-        {currentUser ? (
+        {/* {currentUser ? (
           <>
             <Avatar
               style={{ cursor: "pointer" }}
@@ -112,7 +112,7 @@ function Navbar({ setOpenAuth, openAuth, currentUser }) {
           </>
         ) : (
           <TextButton onClick={() => setOpenAuth(!openAuth)}>Sign In</TextButton>
-        )}
+        )} */}
       </ButtonContainer>
     </Container>
   );

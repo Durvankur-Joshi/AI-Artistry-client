@@ -2,7 +2,7 @@ import { CircularProgress } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 
-const Button = styled.div`
+const StyledButton = styled.button`
   border-radius: 10px;
   color: white;
   font-size: 14px;
@@ -22,33 +22,34 @@ const Button = styled.div`
   ${({ type, theme }) =>
     type === "secondary"
       ? `
-  background: ${theme.secondary};
-  `
+      background: ${theme.secondary};
+      `
       : `
-  background: ${theme.primary};
-`}
+      background: ${theme.primary};
+  `}
 
   ${({ isDisabled }) =>
     isDisabled &&
     `
-  opacity: 0.4;
-  cursor: not-allowed;
-
+      opacity: 0.4;
+      cursor: not-allowed;
   `}
+  
   ${({ isLoading }) =>
     isLoading &&
     `
-    opacity: 0.8;
-  cursor: not-allowed;
-`}
-${({ flex }) =>
+      opacity: 0.8;
+      cursor: not-allowed;
+  `}
+  
+  ${({ flex }) =>
     flex &&
     `
-    flex: 1;
-`}
+      flex: 1;
+  `}
 `;
 
-const button = ({
+const Button = ({
   text,
   isLoading,
   isDisabled,
@@ -56,10 +57,10 @@ const button = ({
   leftIcon,
   type,
   onClick,
-  flex,
+  flex
 }) => {
   return (
-    <Button
+    <StyledButton
       onClick={() => !isDisabled && !isLoading && onClick()}
       isDisabled={isDisabled}
       type={type}
@@ -71,12 +72,12 @@ const button = ({
           style={{ width: "18px", height: "18px", color: "inherit" }}
         />
       )}
-      {leftIcon}
-      {text}
-      {isLoading && <> . . .</>}
-      {rightIcon}
-    </Button>
+      {leftIcon && <span>{leftIcon}</span>}
+      <span>{text}</span>
+      {isLoading && <span> . . .</span>}
+      {rightIcon && <span>{rightIcon}</span>}
+    </StyledButton>
   );
 };
 
-export default button;
+export default Button;

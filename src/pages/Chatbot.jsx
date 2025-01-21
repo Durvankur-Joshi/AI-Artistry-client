@@ -90,7 +90,7 @@ function Chatbot() {
     setMessages((prev) => [...prev, userMessage]);
 
     try {
-      const response = await axios.post("http://localhost:8080/api/chatbot/interact", { prompt: input });
+      const response = await axios.post("https://server-xrg1.onrender.com/api/chatbot/interact", { prompt: input });
       const botMessage = { text: response.data.reply, isUser: false };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {

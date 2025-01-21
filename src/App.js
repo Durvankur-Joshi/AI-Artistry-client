@@ -49,9 +49,9 @@ function App() {
               <Route path="/chat" element={<Chatbot />} />
               <Route path="/post" element={<CreatePost />} exact />
             </Routes>
-            {openAuth && (
+            {/* {openAuth && (
             <Authentication setOpenAuth={setOpenAuth} openAuth={openAuth} />
-          )}
+          )} */}
           </BrowserRouter>
         </Wrapper>
       </Container>

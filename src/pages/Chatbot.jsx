@@ -71,13 +71,19 @@ const SendButton = styled.button`
   }
 `;
 
-const Headline = styled.div `
-display:flex ; 
-flex-direction: column; 
-justify-items : center; 
-align-items : center ;
-color : red ;
-`
+const Headline = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  color: red;
+`;
+
+// Utility function to parse text with *** or ### for bold and underline
+const parseMessageText = (text) => {
+  return <span dangerouslySetInnerHTML={{ __html: text }} />;
+};
+
 
 function Chatbot() {
   const [messages, setMessages] = useState([]);
@@ -90,7 +96,7 @@ function Chatbot() {
     setMessages((prev) => [...prev, userMessage]);
 
     try {
-      const response = await axios.post("https://server-xrg1.onrender.com/api/chatbot/interact", { prompt: input });
+      const response = await axios.post("http://localhost:8080/api/chatbot/interact", { prompt: input });
       const botMessage = { text: response.data.reply, isUser: false };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
@@ -109,9 +115,9 @@ function Chatbot() {
     <ChatContainer>
       <ChatBox>
         {messages.map((msg, index) => (
-          <Message key={index} isUser={msg.isUser}>
-            <div>{msg.text}</div>
-          </Message>
+         <Message key={index} isUser={msg.isUser}>
+         <div>{parseMessageText(msg.text)}</div>
+       </Message>       
         ))}
       </ChatBox>
       <InputContainer>
@@ -121,14 +127,14 @@ function Chatbot() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={handleKeyPress}
-          />
+        />
         <SendButton onClick={sendMessage}>
           <SendRounded />
         </SendButton>
       </InputContainer>
-          <Headline>
-            <p>This chat bot functionality is in testing phase ! It can make mistake </p>
-          </Headline>
+      <Headline>
+        <p>This chat bot functionality is in the testing phase! It can make mistakes.</p>
+      </Headline>
     </ChatContainer>
   );
 }

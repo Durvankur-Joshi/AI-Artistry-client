@@ -9,7 +9,7 @@ const ChatContainer = styled.div`
   flex-direction: column;
   height: 90vh;
   padding: 20px;
-  background-color: ${({ theme }) => theme.background};
+ 
   color: ${({ theme }) => theme.text_primary};
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -32,7 +32,7 @@ const Message = styled.div`
   align-items: ${({ isUser }) => (isUser ? "flex-end" : "flex-start")};
 
   & > div {
-    background: ${({ isUser, theme }) => (isUser ? theme.primary : theme.secondary)};
+    background: ${({ isUser, theme }) => (isUser ? theme.sender : theme)};
     color: ${({ theme }) => theme.text_onPrimary};
     padding: 10px;
     border-radius: 8px;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { SendRounded } from "@mui/icons-material";
 import axios from "axios";
+import { ChatBot } from "../api";
 
 const ChatContainer = styled.div`
   display: flex;

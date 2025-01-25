@@ -94,7 +94,7 @@ function Navbar({ setOpenAuth, openAuth, currentUser }) {
         {/* Chat with AI Button */}
         <Button
           onClick={() => navigate("/chat")}
-          text="Chat with AI"
+          text="Chat with AURA"
           leftIcon={<ChatRounded style={{ fontSize: "18px" }} />}
           type="primary"
         />

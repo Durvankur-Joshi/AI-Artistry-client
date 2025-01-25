@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { SendRounded } from "@mui/icons-material";
 import axios from "axios";
-import { ChatBot } from "../api";
 
 const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 90vh;
   padding: 20px;
- 
   color: ${({ theme }) => theme.text_primary};
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -32,13 +30,20 @@ const Message = styled.div`
   align-items: ${({ isUser }) => (isUser ? "flex-end" : "flex-start")};
 
   & > div {
-    background: ${({ isUser, theme }) => (isUser ? theme.sender : theme)};
+    background: ${({ isUser, theme }) => (isUser ? theme.sender : theme.receiver)};
     color: ${({ theme }) => theme.text_onPrimary};
     padding: 10px;
     border-radius: 8px;
     max-width: 70%;
     word-wrap: break-word;
   }
+`;
+
+const Loader = styled.div`
+  margin: 10px 0;
+  text-align: left;
+  font-style: italic;
+  color: ${({ theme }) => theme.text_secondary};
 `;
 
 const InputContainer = styled.div`
@@ -73,11 +78,8 @@ const SendButton = styled.button`
 `;
 
 const Headline = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-  align-items: center;
-  color: red;
+  text-align: center;
+  color: #7a7a7a;
 `;
 
 // Utility function to parse text with *** or ### for bold and underline
@@ -85,19 +87,24 @@ const parseMessageText = (text) => {
   return <span dangerouslySetInnerHTML={{ __html: text }} />;
 };
 
-
 function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
 
     const userMessage = { text: input, isUser: true };
     setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    setLoading(true);
 
     try {
-      const response = await axios.post("https://server-xrg1.onrender.com/api/chatbot/interact", { prompt: input });
+      const response = await axios.post(
+        "https://server-xrg1.onrender.com/api/chatbot/interact",
+        { prompt: input }
+      );
       const botMessage = { text: response.data.reply, isUser: false };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
@@ -105,7 +112,7 @@ function Chatbot() {
       setMessages((prev) => [...prev, errorMessage]);
     }
 
-    setInput("");
+    setLoading(false);
   };
 
   const handleKeyPress = (e) => {
@@ -116,11 +123,11 @@ function Chatbot() {
     <ChatContainer>
       <ChatBox>
         {messages.map((msg, index) => (
-         <Message key={index} isUser={msg.isUser}>
-         <div>{parseMessageText(msg.text)}</div>
-       </Message>
-       
+          <Message key={index} isUser={msg.isUser}>
+            <div>{parseMessageText(msg.text)}</div>
+          </Message>
         ))}
+        {loading && <Loader>Typing...</Loader>}
       </ChatBox>
       <InputContainer>
         <TextInput
@@ -129,13 +136,14 @@ function Chatbot() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={handleKeyPress}
+          disabled={loading}
         />
-        <SendButton onClick={sendMessage}>
+        <SendButton onClick={sendMessage} disabled={loading}>
           <SendRounded />
         </SendButton>
       </InputContainer>
       <Headline>
-        <p>This chat bot functionality is in the testing phase! It can make mistakes.</p>
+        <p>Aura can make mistakes. Check important info.</p>
       </Headline>
     </ChatContainer>
   );

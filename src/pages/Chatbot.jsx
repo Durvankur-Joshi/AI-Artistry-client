@@ -79,7 +79,7 @@ const SendButton = styled.button`
 
 const Headline = styled.div`
   text-align: center;
-  color: #7a7a7a;
+  color: #bfbfbf;
 `;
 
 // Utility function to parse text with *** or ### for bold and underline
@@ -132,7 +132,7 @@ function Chatbot() {
       <InputContainer>
         <TextInput
           type="text"
-          placeholder="Type your message..."
+          placeholder="Ask to AURA"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={handleKeyPress}

@@ -127,7 +127,7 @@ function Chatbot() {
             <div>{parseMessageText(msg.text)}</div>
           </Message>
         ))}
-        {loading && <Loader>Typing...</Loader>}
+        {loading && <Loader>Thinking....</Loader>}
       </ChatBox>
       <InputContainer>
         <TextInput
